@@ -1,0 +1,807 @@
+@import "queries";
+
+// Typographic Attributes of Meta-serif
+//
+// BORDER-RADIUS:
+// All radius' should be a multiple of 2. Meta-serif has a slight
+// softness but not by much if at all on arms and serifs.
+//
+// BORDERS:
+// All borders should be a multiple of 16 or divisible by 16.
+
+
+// $Compass Extends
+// ============================================================
+
+%transition {
+	transition: .3s all ease-in-out;
+}
+
+
+// $Global Elements
+// ============================================================
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	@include breakpoint(mama-bear) {
+		font-size: 100%;
+	}
+}
+
+body {
+	background: url("../img/subtle_grunge.png") top left repeat;
+	color: #212121;
+}
+
+a {
+	@extend %transition;
+	text-decoration: none;
+	color: #de4d1f;
+	a:visited {
+		color: transparent;
+	}
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+p code,
+.example code {
+	// some bug with monospace things causes <code> elements to not inherit the font-size of the <html> element
+	// <code> elements inside <pre> DO inherit the proper size, for some reason, so we scope this style to the elements we need
+	font-size: 1.125em;
+	// so code doesn't wrap onto a second line in the middle of a piece of a word
+	word-wrap: normal;
+}
+
+abbr {
+	// ff-meta-serif has no real small caps, so we fake it
+	font-variant: normal;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	&:hover {
+		cursor: help;
+	}
+}
+
+abbr[title="syntactically awesome stylesheets"] {
+	text-transform: capitalize;
+}
+
+dl {
+	margin-top: 0;
+}
+
+small {
+	font-size: 65%;
+}
+
+img {
+	max-width: 100%;
+}
+
+section {
+	padding: $typl8-line-height * 0.5em 0 $typl8-line-height * 2em;
+	@extend %rhythm;
+}
+
+.col-wrap {
+	width: 92%;
+	max-width: 40em;
+	margin: 0 auto;
+
+	&.top {
+		@include breakpoint(baby-bear) {
+			padding-top: 15em;
+		}
+	}
+}
+
+.list-reset {
+	list-style-type: none;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+hr {
+	border: 0;
+	height: 0;
+	padding: 0;
+	border-top: 1px solid rgba(0, 0, 0, 0.29);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+
+	&.fancy {
+		border-bottom: 1px solid $cobalt-fade;
+		margin: 0 0 1.65em;
+		text-align: center;
+
+		&::after {
+			@extend .typl8-delta;
+			background-color: #fcfcfc;
+			color: $cobalt-fade;
+			content: "§";
+			position: relative;
+			top: -0.75em;
+		}
+	}
+}
+
+
+// $Logo
+// ============================================================
+
+.logo {
+	vertical-align: -50%; // why? NO IDEA. But 'middle' doesn't quite line up as nicely
+	margin-right: $typl8-line-height * 1rem;
+	cursor: pointer;
+
+	@include breakpoint(papa-bear) {
+		vertical-align: -190%;
+		margin-right: 5em;
+	}
+
+	@include breakpoint(baby-bear) {
+		display: block;
+		text-align: center;
+		margin-right: 0;
+
+		width: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+}
+
+.logo-img {
+	width: 12em;
+
+	.svg & {
+		background: url("../img/logo.png") 50% no-repeat;
+		background-size: 100%;
+	}
+
+	.no-svg &,
+	.no-js & {
+		background: url("../img/logo.png") 50% no-repeat;
+		background-size: cover;
+	}
+
+	&::before {
+		content: "";
+		display: block;
+		width: 0;
+		height: 100%;
+	}
+
+	@include breakpoint(papa-bear) {
+		width: 12em;
+	}
+
+	@include breakpoint(baby-bear) {
+		margin: #{$typl8-line-height/2}em auto;
+	}
+}
+
+
+// $Header
+// ============================================================
+
+.header {
+	padding-top: 1.65em;
+	background: $white url("../img/typeplate-press.png") center bottom no-repeat;
+
+	@include breakpoint(baby-bear) {
+		padding-top: 0;
+
+		p {
+			text-align: left;
+		}
+	}
+}
+
+.lede {
+	padding-top: 0.825em;
+	margin-bottom: 1.65em;
+	& > p:not(.no-indent) {
+		margin-top: 0;
+	}
+}
+
+
+// $Navigation
+// ============================================================
+
+.nav {
+	display: inline-block;
+	@include breakpoint(baby-bear) {
+		padding: #{$typl8-line-height * 2.5}em 0 0;
+		display: block;
+	}
+	@media screen and (max-width: 44.9375em) {
+		display: block;
+	}
+}
+
+.nav-item {
+	@extend .typl8-delta;
+	border-bottom: 1.5px solid rgba(156, 153, 153, 0.69);
+	display: block;
+	margin-bottom: 0;
+	padding: 0 0.5em 0 0.25em;
+	line-height: 2;
+	letter-spacing: normal;
+	color: $rust;
+
+	&:hover,
+	&:focus {
+		text-decoration: none;
+		color: #000000;
+	}
+
+	&:last-child {
+		border-bottom: none;
+	}
+}
+
+
+// $Downloads
+// ============================================================
+
+.dl-item,
+.social-item {
+	border-radius: 0.333333em;
+	display: inline-block;
+	font-family: Monaco, Consolas, monospace;
+	font-size: 0.825em;
+	letter-spacing: normal;
+	text-align: center;
+}
+
+
+.btn {
+	@extend %transition;
+	border: none;
+	padding: $typl8-line-height * 0.5rem;
+	background: rgba(41, 41, 41, 0.97);
+
+	&:last-of-type {
+		margin-right: 0;
+	}
+
+	&:hover,
+	&:focus {
+		background: $download-btn-hover;
+		color: $white;
+		text-decoration: none;
+	}
+
+	small {
+		font-size: 80%;
+	}
+
+	&.btn-backtotop {
+		width: 30%;
+		text-rendering: optimizeLegibility;
+	}
+
+	@include breakpoint(bigass-bear) {
+		font-size: 0.75em;
+		padding: $typl8-line-height * 0.35rem;
+	}
+
+	@include breakpoint(papa-bear) {
+		font-size: 1em;
+		padding: $typl8-line-height * 0.5rem;
+		width: 100%;
+	}
+}
+
+
+.downloads {
+	display: block;
+	padding: 1.65em 0;
+	background: $cobalt-deep url("../img/asfalt.png") top left repeat;
+
+	.col-wrap{
+		display: flex;
+		width: 100%;
+		justify-content: space-between;
+	}
+}
+
+
+.dl-item {
+	box-shadow: -1px -1px 1px rgba(255, 255, 255, 0.08), 1px 1px 1px rgb(0, 0, 0);
+	flex: 0 0 23.5%;
+	position: relative;
+	background: rgba(41, 41, 41, 0.22);
+	color: $white;
+
+	&::after {
+		content: attr(aria-label);
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: -26px;
+		color: white;
+	}
+}
+
+
+// $Social Navigation
+// ============================================================
+
+.social-nav {
+	position: absolute;
+	top: 1.65em;
+	right: 1.65em;
+	@include breakpoint(baby-bear) {
+		top: 12.5em;
+		left: 0;
+		padding: #{$typl8-line-height/2}em;
+		width: 100%;
+		text-align: center;
+		background: $cobalt-deep url("../img/asfalt.png") top left repeat;
+	}
+	@include breakpoint(mama-bear) {
+		margin-top: 0.825em;
+		margin-bottom: 0.825em;
+	}
+}
+
+.social-item {
+	@extend %transition;
+	margin-left: 0.825em;
+	padding: 0 0.825em 0 0;
+	background: $cobalt-fade;
+	color: $cobalt-deep;
+	@include breakpoint(baby-bear) {
+		border: 2px solid #BBAFAF;
+	}
+
+	i {
+		background: $cobalt-deep;
+		color: $white;
+		display: inline-block;
+		padding: 0.65em 0.5em 0.5em 0.825em;
+		margin-right: 0.825em;
+		border-top-left-radius: 0.333333em;
+		border-bottom-left-radius: 0.333333em;
+	}
+
+	&:hover,
+	&:focus {
+		text-decoration: none;
+		background: $rust;
+		color: white;
+	}
+}
+
+
+// $Table of Contents
+// ============================================================
+
+.toc {
+	border-radius: 0 0 6px 6px;
+	background: #DE4D1F;
+	@extend %rhythm;
+	padding-bottom: #{$typl8-line-height}em;
+}
+
+.toc ol {
+	counter-reset: item;
+	list-style: decimal !important;
+	padding-left: 0;
+}
+
+.toc li {
+	display: block;
+	@extend .typl8-zeta;
+}
+
+.toc a {
+	transition: none;
+	color: #6B2813;
+	&:hover {
+		border-bottom: 1.5px solid #000;
+		text-decoration: none;
+		color: #000;
+	}
+}
+
+.toc li a {
+	color: #6B2813;
+}
+
+.toc ol li:before {
+	counter-increment: item;
+	color: rgba(255, 255, 255, 0.7);
+	font-style: normal;
+	font-family: "Cassannet", "ff-meta-serif-web-pro", serif;
+}
+
+@for $i from 1 through 4 {
+	.toc ol:nth-of-type(#{$i}) li:before {
+		content: "#{$i}." counter(item) " ... ";
+	}
+}
+
+.example ul li:hover {
+	content: attr(data-alt);
+}
+
+
+// $TOC
+// ============================================================
+
+#table-of-contents {
+	h1 {
+		margin: 0;
+		padding-top: 0.5em;
+		color: white;
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+}
+
+#drawer {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: baseline;
+	align-content: flex-start;
+	height: 0;
+	min-height: 0;
+	opacity: 0;
+	padding-left: 50px;
+	padding-right: 50px;
+	position: relative;
+	transition: 480ms all cubic-bezier(0.68, -0.55, 0.27, 1.55);
+	color: white;
+
+	&::after {
+		@extend .typl8-gamma;
+		content: "{ T }";
+		display: block;
+		position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: 480ms opacity cubic-bezier(0.68, -0.55, 0.27, 1.55);
+		text-align: center;
+		color: #fbfbfb;
+	}
+
+	&.slide-down {
+		min-height: 28em;
+		opacity: 1;
+		padding-top: 42px;
+	}
+
+	&.slide-down::after {
+		opacity: 1;
+	}
+}
+
+
+// $Example Figures
+// ============================================================
+
+.example {
+	border-radius: 2px;
+	margin-left: 0;
+	margin-right: 0;
+	padding: 20px 20px 10px;
+	background: rgba(204, 204, 204, 0.38);
+}
+
+.example--ampersand {
+	background: transparent;
+	padding-bottom: 0;
+}
+
+.example > pre {
+	margin-top: 0;
+	overflow: auto;
+	white-space: pre;
+	word-spacing: normal;
+	@extend %typl8-normal-wrap;
+}
+
+
+// $Section Titles
+// ============================================================
+
+// this is breakpoint baby bear
+.section-title {
+	@include typl8-typescale($typl8-delta, $typl8-font-base, '#{$typl8-typescale-unit}', $typl8-measure);
+}
+
+
+// $Permalink Anchor
+// ============================================================
+
+.perma-anchor {
+	color: #444;
+	font-weight: normal;
+	position: relative;
+	top: -0.125em;
+	&:hover, &:focus {
+		color: $rust;
+	}
+}
+
+
+// $Typeplate Code Block Styles
+// ============================================================
+
+.typeplate-code-block {
+	pre {
+		font-size: 0.825em;
+		background: #021321;
+		box-shadow: 0 0 1px hsla(0, 0%, 100%, 0.75);
+		padding: $typl8-line-height * 1rem;
+		.no-js & {
+			overflow: auto;
+		}
+	}
+	code {
+		color: #ddd;
+	}
+	figcaption {
+		margin-bottom: 0;
+	}
+}
+
+
+// $Blockquotes -> .extract class
+// ============================================================
+
+blockquote {
+	font-style: italic;
+	@include typl8-blockquote("—");
+	& + figcaption {
+		@extend .typl8-epsilon;
+	}
+}
+
+
+// $Ampersand Demo
+// ============================================================
+
+.amp {
+	@extend %typl8-amp-placeholder;
+	padding: 0;
+	margin-top: -0.5em;
+	line-height: 1;
+	@include breakpoint(baby-bear) {
+		font-size: 2em;
+	}
+	font-size: 3em;
+	text-align: center;
+}
+
+
+// $Figure Demo
+// ============================================================
+
+.example-figcaption {
+	font-style: italic;
+	font-size: 0.85em;
+	@extend %rhythm;
+	strong {
+		font-style: normal;
+	}
+}
+
+
+// $Icon Font Demo
+// ============================================================
+
+.pull-example {
+	padding-bottom: 2em;
+}
+
+
+// $Icon Font Demo
+// ============================================================
+
+.icons {
+	@extend .typl8-beta;
+	.fs1 {
+		display: inline-block;
+		&:before {
+			padding-right: .25em;
+			color: #3A1414;
+		}
+	}
+}
+
+
+// $Typekit
+// ============================================================
+/*!
+ * FF Meta Serif Web Pro
+ * The most influential sans serif of the digital revolution (FF Meta)
+ * now has a serif companion. It took three years and three designers
+ * to develop FF Meta Serif: Erik Spiekermann, Christian Schwartz and
+ * Kris Sowersby. More about FF Meta Serif Web Pro http://metaserif.com
+ */
+
+body {
+	opacity: 0;
+	transition: 250ms opacity ease-in-out;
+	font-weight: 400;
+
+	.wf-loading & {
+		font-family: serif;
+		visibility: hidden;
+	}
+
+	.no-js &,
+	.wf-active &,
+	.wf-inactive & {
+		opacity: 1;
+		visibility: visible;
+		font-family: "ff-meta-serif-web-pro",serif;
+		font-weight: 400;
+	}
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: 700;
+}
+
+
+// $Footer
+// ============================================================
+
+.site-footer {
+	font-size: 75%;
+	width: 100%;
+	background: #131415 url("../img/asfalt.png") top left repeat;
+	color: #9E9E9E;
+	text-align: center;
+	height: 100%;
+	padding: #{$typl8-line-height * 1.5}em 0 #{$typl8-line-height/2}em;
+	a {
+		color: #de4d1f;
+	}
+}
+
+
+// $Helpers
+// ============================================================
+
+.center {
+	text-align: center;
+}
+
+.capsify {
+	text-transform: uppercase;
+	letter-spacing: 0.125rem;
+}
+
+// generic bottom rule class
+.botDivider {
+	border-bottom: #{$typl8-font-size/800}rem solid $botDividerBorder;// Thickness is based on the thickness of meta-serif stems (measured 8px at 18px font-size)
+	position: relative;
+	&:last-child {
+		border-bottom: none;
+	}
+	&.bright {
+		border-bottom-color: $rust;
+	}
+	&:not(.base-type):not(.header):after {
+		@extend .typl8-gamma;
+		content: "{T}";
+		position: absolute;
+		top: -#{typl8-context-calc($typl8-font-base, 14, em)};
+		left: 45%;
+		width: typl8-context-calc($typl8-font-base, 14, em);
+		text-align: center;
+		background: rgb(255, 255, 255) url("../img/subtle_grunge.png") top left repeat;
+	}
+}
+
+//control our vertical rhythm
+%rhythm {
+	margin-top: 0;
+	margin-bottom: $typl8-line-height * 1rem;
+}
+
+
+// $Indenting
+// ============================================================
+
+p {
+	// reset top margin, and set bottom margin equal to one unit of line-height
+	@extend %rhythm;
+}
+p.no-indent {
+	text-indent: 0;
+}
+
+
+// $Drop Cap
+// ============================================================
+
+.typl8-drop-cap {
+	@include typl8-dropcap($typl8-dropcap-float-position, $typl8-dropcap-font-size, $typl8-dropcap-font-family, $typl8-dropcap-txt-indent, $typl8-dropcap-margin, $typl8-dropcap-padding, $typl8-dropcap-color, $typl8-dropcap-line-height, $typl8-dropcap-bg);
+}
+
+
+// $Definition Lists
+// ============================================================
+
+.typl8-lining {
+	@include typl8-definition-list-style(lining);
+}
+
+.typl8-dictionary-style {
+	@include typl8-definition-list-style(dictionary-style);
+}
+
+
+
+// $Carbon Ads
+// ============================================================
+
+#carbonads {
+  border-bottom: 1px solid rgba(116, 109, 109, 0.08);
+  min-height: 100px;
+  position: relative;
+  opacity: 0;
+  animation: fade .3s forwards 1;
+  background: rgba(250, 250, 250, 0.64);
+}
+.carbon-wrap {
+  display: block;
+  max-width: 720px;
+  margin: 0 auto;
+  position: relative;
+}
+.carbon-wrap > a {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 6px;
+  font-size: 16px;
+  line-height: 1.25;
+}
+.carbon-img img {
+  animation: fade .3s forwards 1;
+  vertical-align: middle;
+  opacity: 0;
+}
+.carbon-text {
+  color: rgb(185, 185, 186);
+}
+.carbon-poweredby {
+  padding-right: 12px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 40px;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: right;
+  font-size: 12px;
+  color: rgba(105, 118, 118, 0.46);
+  font-style: italic;
+}
+
+@keyframes fade {
+  to {opacity: 1;}
+}
